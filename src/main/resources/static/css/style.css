@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+header {height:70px;}
+.contents {min-height:500px;}
+.timelinecontent {
+	width: 300px;
+	height:200px;
+	border:1px gray solid;
+	}
