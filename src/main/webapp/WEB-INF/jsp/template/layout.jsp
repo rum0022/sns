@@ -20,7 +20,6 @@
 		</header>
 		<section class="contents bg-light">
 			<jsp:include page="../${viewName}.jsp" />
-			<jsp:include page="../${signUp}.jsp" />
 		</section>
 	</div>
 </body>
