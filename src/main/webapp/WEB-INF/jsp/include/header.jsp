@@ -1,11 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="h-100 d-flex justify-content-between align-items-center">
-	<div class="ml-3">
-		<h1>instagram</h1>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<div class="h-100 header bg-info d-flex justify-content-between">
+	<%-- logo --%>
+	<div class="logo d-flex align-items-center">
+		<h1 class="text-white ml-3">Marondalgram</h1>
 	</div>
-	<div class="mr-3">
-		<span>아름님안녕하세요</span>
-		<a href="/user/sign-out">로그아웃</a>
+	
+	<%-- 로그인 정보 --%>
+	<div>
+		<%--로그인 시 --%>
+		<c:if test="${not empty userId}">
+			<span>${userName}님 안녕하세요</span>
+			<a href="/user/sign-out" class="mr-3">로그아웃</a>
+		</c:if>	
+		<%--비로그인시 --%>
+		<c:if test="${empty userId}">
+			<a href="/user/sign-in-view" class="mr-3 display-5">로그인</a>
+		</c:if>
 	</div>
 </div>
