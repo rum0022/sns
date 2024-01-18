@@ -24,8 +24,8 @@ public class PostRestController {
 	// post -> insert
 		@PostMapping("/create")
 		public Map<String, Object> create(
-				@RequestParam("content") String content,
-				@RequestParam(value = "file", required=false) MultipartFile file,
+				@RequestParam(value = "content", required = false) String content,
+				@RequestParam("file") MultipartFile file,
 				HttpSession session) {
 			
 			Integer userId = (Integer)session.getAttribute("userId");

@@ -79,7 +79,7 @@
 					
 					<%-- 댓글 쓰기 --%>
 					<div class="comment-write d-flex border-top mt-2">
-						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
+						<input type="text" id="content" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
 						<button type="button" class="comment-btn btn btn-light">게시</button>
 					</div>
 				</div> <%--// 댓글 목록 끝 --%>
@@ -101,7 +101,7 @@
 		$("#file").on("change", function(e) {
 			//alert("이미지 선택");
 			// 취소를 누를때 비어있는 경우 처리
-			let fileName = e.target.files[0]; // reed-8493547_640.jpg
+			let file = e.target.files[0]; // reed-8493547_640.jpg
 			if (file == null) {
 				$("#file").val(""); // 파일태그 파일 제거 (보이지 않지만 업로드 될 수 있으므로 주의)
 				$("#fileName").text(""); // 보여지는 파일명 비우기
@@ -109,7 +109,7 @@
 			}
 			
 			//alert("이미지 선택");
-			fileName = e.target.files[0].name; // winter-8425500_640.jpg
+			let fileName = e.target.files[0].name; // winter-8425500_640.jpg
 			console.log(fileName);
 			
 			// 확장자 유효성 체크
@@ -154,7 +154,7 @@
 				}
 			}
 			// 폼태그 구성하고 이미지
-			let formDate = new FormDate();
+			let formData = new FormData();
 			formData.append("content", content);
 			formData.append("file", $("#file")[0].files[0]);
 			
@@ -162,9 +162,37 @@
 				type:"POST"
 				, url:"/post/create"
 				, data:formData
-				, enctype:"multipart/form-date"
-				, processDate:false
+				, enctype:"multipart/form-data"
+				, processData:false
 				, contentType:false
+				, success:function(data) {
+					if (data.code == 200) {
+						// 글목록 화면으로 이동
+						alert("글이 저장되었습니다.");
+						location.reload();
+					} else if (data.code == 500) {// 비로그인 일 때
+						location.href = "/user/sign-in-view";
+					} else {
+						alert("data.error_message");
+					}
+				}
+				, error: function(e) {
+					alert("글을 저장하는데 실패 했습니다.");
+				}
+			
+			});
+		});
+		
+		// 댓글게시 누르면
+		$(".comment-btn").on("click", function() {
+			//alert("댓글저장");
+			let content = $("#content").val();
+			
+			$.ajax({
+				type:"POST"
+				, url:"/comment/create"
+				, data:{"content":content}
+				
 				, success:function(data) {
 					if (data.code == 200) {
 						// 글목록 화면으로 이동

@@ -24,16 +24,17 @@ public class PostBO {
 		return postRepository.findAllByOrderByIdDesc();
 	}
 
-	// insert
-	public void addPost(int userId, String userLoginId, String content, 
+	// insert// input: 파라미터들   output:PostEntity
+	public PostEntity addPost(int userId, String userLoginId, String content, 
 			MultipartFile file) {
 		
 		String imagePath = null;
+		// 이미지가 있으면 업로드 후 imagePath를 받아옴
 		if (file != null) {
 			imagePath = fileManagerService.saveFile(userLoginId, file);
 		} 
 		
-		 postRepository.save(PostEntity.builder()
+		 return postRepository.save(PostEntity.builder()
 				.userId(userId)
 				.content(content)
 				.imagePath(imagePath)
