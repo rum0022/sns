@@ -51,6 +51,7 @@
 		
 		// 2. 아이디 중복확인
 		$("#loginIdCheckBtn").on("click", function() {
+			//e.preventDefault();
 			//alert("중복확인");
 			
 			// 경고 문구 초기화
