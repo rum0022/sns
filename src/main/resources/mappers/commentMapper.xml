@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.instagram.comment.mapper.CommentMapper">
+ 
+ 	<insert id="insertComment">
+ 		INSERT INTO `comment`
+ 		(
+			`postId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{postId}
+ 			, #{userId}
+ 			, #{content}
+ 			, NOW()
+ 			, NOW()
+ 		)	
+ 	</insert>
+ 	
+ 	<select id="selectComment" resultType="com.instagram.comment.domain.Comment">
+ 		SELECT
+ 			`id`
+ 			, `postId`
+			, `userId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`comment`			
+ 	</select>
+ 	
+ 	<delete id="deleteCommentById">
+		DELETE
+		FROM
+			`comment`
+		WHERE
+			`id` = #{commentId}	
+	</delete>
+ 
+ </mapper>
