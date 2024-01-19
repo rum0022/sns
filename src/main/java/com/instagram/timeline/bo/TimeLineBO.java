@@ -27,11 +27,11 @@ public class TimeLineBO {
 		// 글목록을 다 가져온다. List<PostEntity>
 		List<PostEntity> postList = postBo.getPostList();
 		
-		
 		// 글목록 반복문 순회
+		
 		for(PostEntity post : postList) {
-			cardViewList.add(post);
-		} 
+			
+		}
 		
 		// post => cardview    => cardView리스트에 넣기
 		
