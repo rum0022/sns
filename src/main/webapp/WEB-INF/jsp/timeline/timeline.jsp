@@ -32,7 +32,7 @@
 			<div class="card border rounded mt-3">
 				<%-- 글쓴이, 더보기(삭제) --%>
 				<div class="p-2 d-flex justify-content-between">
-					<span class="font-weight-bold">${card.user}</span>
+					<span class="font-weight-bold">${card.user.loginId}</span>
 					
 					<a href="#" class="more-btn">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -70,7 +70,7 @@
 					<c:forEach items="${card.commentList}" var="commentView">
 							<div class="card-comment m-1">
 								<span class="font-weight-bold">${commentView.user.loginId}</span>
-								<span>${commentView.comment.comment}</span>
+								<span>${commentView.comment.content}</span>
 								
 								<%-- 댓글 삭제 버튼 --%>
 								<a href="#" class="comment-del-btn" >
@@ -84,7 +84,7 @@
 						<button type="button" class="comment-btn btn btn-light">게시</button> 
 					</div>
 					
-				</div>--%> <%--// 댓글 목록 끝 --%>
+				</div> <%--// 댓글 목록 끝 --%>
 			 </div>  <%--// 카드1 끝 --%>
 		 </c:forEach>
 		</div> <%--// 타임라인 영역 끝  --%>
