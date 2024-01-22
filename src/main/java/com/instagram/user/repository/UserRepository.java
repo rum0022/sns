@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 		
 		// null 이거나 UserEntity(단건) 돌려준다
 		public UserEntity findByLoginIdAndPassword(String loginId, String password);
+		
+		// pk로 가져오는건 내부에 있음.
 }

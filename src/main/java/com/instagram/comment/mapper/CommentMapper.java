@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.instagram.comment.domain.Comment;
+import com.instagram.comment.domain.CommentView;
 
 @Mapper
 public interface CommentMapper {
@@ -17,5 +18,7 @@ public interface CommentMapper {
 
 	public List<Comment> selectComment(); 
 	
-	public int deleteCommentById(int commnetId);
+	public List<Comment> selectCommentListByPostId(int postId);
+	
+	public int deleteCommentById(int id);
 }

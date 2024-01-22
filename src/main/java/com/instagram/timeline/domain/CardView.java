@@ -1,5 +1,8 @@
 package com.instagram.timeline.domain;
 
+import java.util.List;
+
+import com.instagram.comment.domain.CommentView;
 import com.instagram.post.entity.PostEntity;
 import com.instagram.user.entity.UserEntity;
 
@@ -18,6 +21,7 @@ public class CardView {
 	private UserEntity user;
 	
 	// 글하나에 대한 댓글들
+	private List<CommentView> commentList;
 	
 	// 좋아요 개수
 }

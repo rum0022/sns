@@ -34,6 +34,11 @@ public class UserBO {
 		public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
 			return userRepository.findByLoginIdAndPassword(loginId, password);
 		}
+		
+		// input: userId        output: userEntity
+		public UserEntity getUserEntityByUserId(int id) {
+			return userRepository.findById(id).orElse(null); // 타입맞추기
+		}
 }
 	
 	

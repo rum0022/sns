@@ -6,23 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.instagram.comment.bo.CommentBO;
-import com.instagram.comment.domain.Comment;
-import com.instagram.post.bo.PostBO;
-import com.instagram.post.entity.PostEntity;
-
-import jakarta.servlet.http.HttpSession;
+import com.instagram.timeline.bo.TimeLineBO;
+import com.instagram.timeline.domain.CardView;
 
 @Controller
 public class TimeLineController {
-
-	@Autowired
-	private PostBO postBO;
 	
 	@Autowired
-	private CommentBO commentBo;
+	private TimeLineBO timeLineBO;
+
+//	@Autowired
+//	private PostBO postBO;
+//	
+//	@Autowired
+//	private CommentBO commentBo;
 	
 	@GetMapping("/timeline/timeline-view")
 	public String timelineView(Model model) {		
@@ -33,7 +31,9 @@ public class TimeLineController {
 		//model.addAttribute("commentList", commentList);
 		//model.addAttribute("postList", postList);
 		
+		List<CardView> cardViewList = timeLineBO.generateCardViewList();
 		
+		model.addAttribute("cardViewList", "cardViewList");
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";
 	}

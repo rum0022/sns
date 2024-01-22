@@ -47,9 +47,9 @@ public class CommentRestController {
 	@ResponseBody
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
-			@RequestParam("commentId") int commentId) {
+			@RequestParam("id") int id) {
 		
-		int row = commentBo.deleteCommentById(commentId);
+		int row = commentBo.deleteCommentById(id);
 		
 		Map<String, Object> result = new HashMap<>();
 		if (row > 0) {
