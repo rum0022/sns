@@ -33,7 +33,7 @@ public class TimeLineController {
 		
 		List<CardView> cardViewList = timeLineBO.generateCardViewList();
 		
-		model.addAttribute("cardViewList", "cardViewList");
+		model.addAttribute("cardViewList", cardViewList);
 		model.addAttribute("viewName", "timeline/timeline");
 		return "template/layout";
 	}
