@@ -46,11 +46,17 @@
 				
 				<%-- 좋아요 --%>
 				<div class="card-like m-3">
-					<a href="#" class="like-btn">
+				<c:if test="${userId}">
+					<a href="#" class="like-btn" data-post-id="${card.post.id}">
 						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 					</a>
+				</c:if>	
+				
+					<a href="#" class="like-filled-btn" data-post-id="${card.post.id}">
+						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="empty heart">
+					</a>
 					
-					좋아요 13개
+					<span>좋아요 ${card.likeCount}개</span>
 				</div>
 				
 				<%-- 글 --%>
@@ -73,9 +79,12 @@
 								<span>${commentView.comment.content}</span>
 								
 								<%-- 댓글 삭제 버튼 --%>
-								<a href="#" class="comment-del-btn" >
+								<c:if test="${userId eq commentView.comment.userId}">
+								<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
 									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
 								</a>
+								</c:if>
+								
 							</div>
 						</c:forEach>	
 					<%-- 댓글 쓰기 --%>
@@ -236,19 +245,19 @@
 		$(".comment-del-btn").on("click", function(e) {
 			//alert("삭제");
 			e.preventDefault();
-			let id = $(this).data("comment-id");
+			let commentId = $(this).data("comment-id");
 			
 			 // ajax
 			 $.ajax({ // delete는 포스트방식으로
 				type:"DELETE"
-				, url:"/timeline/delete"
-				, data:{"id":id}
+				, url:"/comment/delete"
+				, data:{"commentId":commentId}
 			 
 			 	, success:function(data) {
 			 		if (data.code == 200) {
 			 			// 성공
 			 			location.reload(true); 
-			 		} else if (data.code == 500) {
+			 		} else {
 			 			// 실패
 			 			alert(data.error_message);
 			 		}
@@ -257,6 +266,30 @@
 			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
 			 	}
 			 });
+		});
+		
+		// 좋아요클릭이벤트(토글)
+		$(".like-btn").on("click", function(e) {
+			e.preventDefault();
+			// alert("좋아요");
+			let postId = $(this).data("post-id"); 
+			
+			$.ajax({
+				url:"/like/" + postId
+				, success:function(data) {
+			 		if (data.code == 200) {
+			 			// 성공
+			 			location.reload(true); 
+			 		} else if (data.code == 300) {
+			 			// 비로그인
+			 			alert(data.error_message);
+			 			location.href = "/user/sign-in-view"
+			 		}
+			 	}
+			 	, error:function(request, status, error) {
+			 		alert("좋아요를 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
 		});
 	});
 </script>

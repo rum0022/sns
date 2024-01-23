@@ -24,4 +24,8 @@ public class CardView {
 	private List<CommentView> commentList;
 	
 	// 좋아요 개수
+	private int likeCount; // 없으면 0
+	
+	// 로그인 된 사람이 좋아요를 누른지 여부
+	private boolean filledLike;  //is로 네임을 시작하면 게터가 is로 시작함
 }

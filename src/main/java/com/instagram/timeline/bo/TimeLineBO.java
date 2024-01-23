@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.instagram.comment.bo.CommentBO;
 import com.instagram.comment.domain.CommentView;
+import com.instagram.like.bo.LikeBO;
+import com.instagram.like.domain.Like;
 import com.instagram.post.bo.PostBO;
 import com.instagram.post.entity.PostEntity;
 import com.instagram.timeline.domain.CardView;
@@ -24,7 +26,10 @@ public class TimeLineBO { // BO는 다른 비오를 부를 수 있다.
 	private UserBO userBo;
 	
 	@Autowired
-	private CommentBO commentBO;	
+	private CommentBO commentBO;
+	
+	@Autowired
+	private LikeBO likeBO;
 
 	// input: X        output: List<CardView>
 	public List<CardView> generateCardViewList() {
@@ -52,6 +57,14 @@ public class TimeLineBO { // BO는 다른 비오를 부를 수 있다.
 			cardView.setCommentList(commentList);
 			
 			// 좋아요
+			int likeCount = likeBO.getlikeCountByPostId(post.getId());
+			cardView.setLikeCount(likeCount);
+			
+			// 로그인된 사람이 좋아요를 했는지 여부 (비로그인 사용자 고려)
+			//private boolean filledLike;
+//			boolean filledLike = likeBO.getLikeByPostIdUserId(post.getId(), user.getId());
+//			cardView.setLikeCount(filledLike);
+			
 			
 			//★★★★★★★★★★★★★★ 마지막에 cardView를 list에 넣는다.!!!!!!! 중요!!!!
 			cardViewList.add(cardView);
