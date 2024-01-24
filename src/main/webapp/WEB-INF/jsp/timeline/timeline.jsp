@@ -46,17 +46,18 @@
 				
 				<%-- 좋아요 --%>
 				<div class="card-like m-3">
-				<c:if test="${userId}">
+				<c:if test="${card.filledLike eq false}">
 					<a href="#" class="like-btn" data-post-id="${card.post.id}">
 						<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 					</a>
 				</c:if>	
 				
-					<a href="#" class="like-filled-btn" data-post-id="${card.post.id}">
-						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="empty heart">
+				<c:if test="${card.filledLike eq true}">
+					<a href="#" class="like-btn" data-post-id="${card.post.id}">
+						<img src="https://www.iconninja.com/files/527/809/128/heart-icon.png" width="18" height="18" alt="filled heart">
 					</a>
-					
-					<span>좋아요 ${card.likeCount}개</span>
+				</c:if>	
+					좋아요 ${card.likeCount}개
 				</div>
 				
 				<%-- 글 --%>

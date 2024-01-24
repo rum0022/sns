@@ -18,7 +18,17 @@
 		)	
  	</insert>
  
- 	<select id="selectlikeCountByPostIdUserId" resultType="com.instagram.like.domain.Like">
+	<delete id="deletelikeByPostIdUserId">
+ 		DELETE
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+ 	</delete>
+ 	
+ 	<!--  
+ 	<select id="selectlikeCountByPostIdUserId" resultType="int">
  		SELECT
  			COUNT(1)
 		FROM
@@ -28,17 +38,7 @@
 		AND `userId` = 	#{userId}		
  	</select>
  	
- 	<delete id="deletelikeByPostIdUserId">
- 		DELETE
-		FROM
-			`like`
-		WHERE
-			WHERE
-			`postId` = #{postId}
-			AND `userId` = #{userId}
- 	</delete>
- 	
- 	<select id="selectlikeCountByPostId" resultType="com.instagram.like.domain.Like">
+ 	<select id="selectlikeCountByPostId" resultType="int">
  		SELECT
  			`postId`
 	 		, `userId`
@@ -47,6 +47,19 @@
 			`like`	
 		WHERE
 			`postId`= #{postId}	
+ 	</select>-->
+ 	
+ 	<!-- 라이크 카운트 쿼리 하나로 합치기 -->
+ 	<select id="selectLikeCountByPostIdOrUserId" resultType="int">
+ 		SELECT
+ 			COUNT(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = 	#{postId}
+			<if test="userId != null">
+			AND `userId` = 	#{userId}	
+			</if>
  	</select>
  	
  </mapper>

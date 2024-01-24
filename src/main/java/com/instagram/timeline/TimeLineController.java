@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.instagram.timeline.bo.TimeLineBO;
 import com.instagram.timeline.domain.CardView;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class TimeLineController {
 	
@@ -23,15 +25,15 @@ public class TimeLineController {
 //	private CommentBO commentBo;
 	
 	@GetMapping("/timeline/timeline-view")
-	public String timelineView(Model model) {		
+	public String timelineView(Model model, HttpSession session) {		
 		// 글 목록 조회
 		//List<PostEntity> postList = postBO.getPostList();
 		// 댓글 뿌리기
 		//List<Comment> commentList = commentBo.getComment();
 		//model.addAttribute("commentList", commentList);
 		//model.addAttribute("postList", postList);
-		
-		List<CardView> cardViewList = timeLineBO.generateCardViewList();
+		Integer userId = (Integer) session.getAttribute("userId");  // null이 가능하도록
+		List<CardView> cardViewList = timeLineBO.generateCardViewList(userId);
 		
 		model.addAttribute("cardViewList", cardViewList);
 		model.addAttribute("viewName", "timeline/timeline");
