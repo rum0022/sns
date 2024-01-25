@@ -62,4 +62,11 @@
 			</if>
  	</select>
  	
+ 	<delete id="deleteLikeByPostId">
+		DELETE
+		FROM
+			`like`
+		WHERE
+			`id` = #{postId}	
+	</delete>
  </mapper>

@@ -34,9 +34,12 @@
 				<div class="p-2 d-flex justify-content-between">
 					<span class="font-weight-bold">${card.user.loginId}</span>
 					
-					<a href="#" class="more-btn">
+					<%--(더보기 ... 버튼) 로그인된 사람과 글쓴이 정보가 일치할 때 노출 --%>
+					<c:if test="${userId eq card.post.userId}">
+					<a href="#" class="more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
 						<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
 					</a>
+					</c:if>
 				</div>	
 				
 				<%-- 카드 이미지 --%>
@@ -100,6 +103,24 @@
 		</div> <%--// 타임라인 영역 끝  --%>
 	</div> <%--// contents-box 끝  --%>
 </div>
+
+<!-- 모달은 오로지 하나, 재활용이 되고있는상황, ...을 클릭하는순간 포스트번호가(스크립트로 그때그때) 심어지게하기 -->
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<%-- modal-sm: 작은 모달창
+		modal-dialog-centered: 수직 기준 가운데 위치 --%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+			<div class="py-3 border-bottom">
+    			<a href="#" id="postDelete">삭제하기</a>
+    		</div>
+    		<div class="py-3">
+    			<a href="#" data-dismiss="modal">취소하기</a>
+    		</div>
+		</div>
+	</div>
+</div>
+
 
 <script>
 	$(document).ready(function() {
@@ -289,6 +310,39 @@
 			 	}
 			 	, error:function(request, status, error) {
 			 		alert("좋아요를 실패했습니다. 관리자에게 문의해주세요.");
+			 	}
+			});
+		});
+		
+		// 더보기(...) 클릭 => 모달 띄우기
+		$(".more-btn").on("click", function(e) {
+			e.preventDefault(); // 올라가는 현상방지 a태그
+			
+			let postId = $(this).data("post-id"); //getting
+			//alert(postId);
+			
+			// 1개로 존재하는 모달에 재활용을 위해 data-post-id를 심는다. ...누를때마다 
+			$("#modal").data("post-id", postId) // "post-id"에 postId를 세팅할것이다.
+		});
+		//모달안에있는 삭제하기 클릭(사진 글 다 삭제)
+		$("#modal #postDelete").on("click", function(e) {
+			e.preventDefault();
+			
+			let postId = $("#modal").data("post-id");
+			// alert(postId);
+			$.ajax({
+				type:"DELETE"
+				, url:"/post/delete"
+				, data:{"postId":postId}
+				, success:function(data) {
+					if (data.code == 200) {
+						location.href = "/timeline/timeline-view"
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(request, status, error) {
+			 		alert("삭제하는데 실패했습니다. 관리자에게 문의해주세요.");
 			 	}
 			});
 		});

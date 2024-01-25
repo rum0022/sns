@@ -43,4 +43,8 @@ public class LikeBO {//  있으면 삭제 없으면 추가
 		// 로그인이 0보다 크면 (1이면) 채운다, 그렇지 않으면 false
 		return likeMapper.selectLikeCountByPostIdOrUserId(postId, userId) > 0;
 	}
+	
+	public void deleteLikeByPostId(int postId) {
+		likeMapper.deleteLikeByPostId(postId);
+	}
 }
