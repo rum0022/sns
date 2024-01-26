@@ -3,7 +3,6 @@ package com.instagram.like.bo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.instagram.like.domain.Like;
 import com.instagram.like.mapper.LikeMapper;
 
 @Service

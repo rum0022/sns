@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.instagram.comment.bo.CommentBO;
 import com.instagram.comment.domain.CommentView;
 import com.instagram.like.bo.LikeBO;
-import com.instagram.like.domain.Like;
 import com.instagram.post.bo.PostBO;
 import com.instagram.post.entity.PostEntity;
 import com.instagram.timeline.domain.CardView;

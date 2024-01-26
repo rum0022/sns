@@ -10,10 +10,4 @@ import com.instagram.post.entity.PostEntity;
 public interface PostRepository extends JpaRepository<PostEntity, Integer>{
 
 	public List<PostEntity> findAllByOrderByIdDesc();
-	
-	public PostEntity findByIdAndUserId(
-			@Param("id") Integer id, 
-			@Param("userId") int userId);
-	
-	public int deleteById(int id);
 }

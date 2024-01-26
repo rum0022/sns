@@ -94,7 +94,7 @@
 					<%-- 댓글 쓰기 --%>
 						<div class="comment-write d-flex border-top mt-2">
 						<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-						<button type="button" class="comment-btn btn btn-light">게시</button> 
+						<button type="button" class="comment-btn btn btn-light" data-user-id="${userId}" data-post-id="${card.post.id}">게시</button> 
 					</div>
 					
 				</div> <%--// 댓글 목록 끝 --%>
@@ -252,13 +252,12 @@
 						alert("글이 저장되었습니다.");
 						location.reload();
 					} else if (data.code == 500) {// 비로그인 일 때
-						location.href = "/user/sign-in-view";
-					} else {
 						alert("data.error_message");
-					}
+						location.href = "/user/sign-in-view";
+					} 
 				}
-				, error: function(e) {
-					alert("글을 저장하는데 실패 했습니다.");
+				, error: function(request, status, errore) {
+					alert("댓글 쓰기 실패했습니다");
 				}
 			});
 		});

@@ -67,6 +67,6 @@
 		FROM
 			`like`
 		WHERE
-			`id` = #{postId}	
+			`postId` = #{postId}	
 	</delete>
  </mapper>

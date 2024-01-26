@@ -13,6 +13,9 @@ import com.instagram.like.bo.LikeBO;
 import com.instagram.post.entity.PostEntity;
 import com.instagram.post.repository.PostRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PostBO {
 	
@@ -51,35 +54,26 @@ public class PostBO {
 	}
 	
 	// 삭제하기
-	public void deletePostByPostId(int postId, int userId) {
+	public void deletePostByPostIdUserId(int postId, int userId) {
 		
 		// 기존글 가져오기
-		PostEntity post = postRepository.findByIdAndUserId(postId, userId);
+		PostEntity post = postRepository.findById(postId).orElse(null);
 		
 		if (post == null) {
+			log.error("[delete post] postId:{}, userId:{}", postId, userId);
 			return;
 		}
 		
 		// 글삭제
-		int deleteRowCount = postRepository.deleteById(postId);
+		postRepository.delete(post);
 		
 		// 이미지 삭제하기
-		if (deleteRowCount > 0 && post.getImagePath() != null) {
-			fileManagerService.deleteFile(post.getImagePath());
-		} 
-		
+		fileManagerService.deleteFile(post.getImagePath());
+			
 		// 댓글들 삭제
-		List<CommentView> commentList = commentBO.generateCommentViewListByPostId(postId);
-		for (CommentView comment : commentList) {
-			if (deleteRowCount > 0 && comment.getComment() != null) {
-				commentBO.deleteCommentById(postId);
-			}
-		}
+		commentBO.deleteCommentsByPostId(postId);
 		
 		// 좋아요들 삭제
-		int like = likeBO.getlikeCountByPostId(postId);
-		if (deleteRowCount > 0 && like > 0) {
-			likeBO.deleteLikeByPostId(postId);
-		}
+		likeBO.deleteLikeByPostId(postId);
 	}
 }
